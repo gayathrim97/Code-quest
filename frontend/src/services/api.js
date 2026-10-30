@@ -1,7 +1,10 @@
 const configuredApiBase = import.meta.env.VITE_API_BASE_URL?.trim().replace(/\/+$/, '');
-const configuredApiOrigin = configuredApiBase && !configuredApiBase.startsWith('/')
+const configuredApiUrl = configuredApiBase && !configuredApiBase.startsWith('/')
   ? (/^https?:\/\//i.test(configuredApiBase) ? configuredApiBase : `https://${configuredApiBase}`)
   : '';
+const configuredApiOrigin = /^https?:\/\/[a-z0-9-]+$/i.test(configuredApiUrl)
+  ? `${configuredApiUrl}.onrender.com`
+  : configuredApiUrl;
 const API_BASE_URL = configuredApiOrigin
   ? `${configuredApiOrigin.replace(/\/api$/i, '')}/api`
   : '/api';
